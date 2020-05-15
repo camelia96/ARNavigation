@@ -296,7 +296,7 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
 
     private fun setSelectionMode(isSelectionMode : Boolean) {
         this.selectionMode = isSelectionMode
-
+        switch1.visibility = View.GONE
         if (isSelectionMode) {
             toolbar.setTitle("도착지를 설정하세요")
 
