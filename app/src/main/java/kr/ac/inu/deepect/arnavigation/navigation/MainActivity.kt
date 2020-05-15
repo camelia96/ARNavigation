@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
 
     var Start_Point : TMapPoint? = null
     var Destination_Point : TMapPoint? = null
-    var Current_Location : Location? = null
+
 
     var start  = false
 
@@ -217,7 +217,6 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
     private fun moveToCurrentLocation() {
         try{
             val currentLocation = gpsManager.getCurrentLocation()
-            Current_Location = currentLocation
             if (currentLocation != null) {
                 mapView.setLocationPoint(currentLocation.longitude, currentLocation.latitude)
                 mapView.setCenterPoint(currentLocation.longitude, currentLocation.latitude)
@@ -348,8 +347,12 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
                 switch1.visibility = View.VISIBLE
 
 
-                //val currentLocation = Current_Location
                 val currentLocation = gpsManager.currentLocation
+                if (currentLocation != null) {
+                    mapView.setLocationPoint(currentLocation.longitude, currentLocation.latitude)
+                    mapView.setCenterPoint(currentLocation.longitude, currentLocation.latitude)
+                }
+
                 val startPoint = TMapPoint(currentLocation!!.latitude, currentLocation.longitude)
 
                 val endpoint = destination
