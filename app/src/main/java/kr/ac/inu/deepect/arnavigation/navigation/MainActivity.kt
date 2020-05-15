@@ -35,6 +35,7 @@ import org.json.JSONObject
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -81,7 +82,6 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
 
     //PopupList Item List
     //private var popupListItems = ArrayList<PopupListItem>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -296,9 +296,10 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
 
     private fun setSelectionMode(isSelectionMode : Boolean) {
         this.selectionMode = isSelectionMode
-        switch1.visibility = View.GONE
+
         if (isSelectionMode) {
             toolbar.setTitle("도착지를 설정하세요")
+            switch1.visibility = View.GONE
 
             mapView.setOnLongClickListenerCallback(object : TMapView.OnLongClickListenerCallback {
                 override fun onLongPressEvent(
@@ -363,6 +364,17 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
                                     Log.d("result:", objects.toString())
 
                                     val polyLine = parseJSON(objects)
+                                    Log.d("totaltime","${ParseJson.totalTime}")
+
+                                    val now = System.currentTimeMillis()
+                                    Log.d("now", "${now}")
+                                    val expectedtime : Long = now + (ParseJson.totalTime!!.toLong()*1000L)
+                                    Log.d("et", "${expectedtime}")
+                                    val date1 =Date(expectedtime)
+                                    val sdfNow = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+                                    val formatDate = sdfNow.format(date1)
+                                    totaltime.text = formatDate
+
 
                                     runOnUiThread(object : Runnable {
                                         override fun run() {
@@ -411,6 +423,7 @@ class MainActivity : AppCompatActivity(),  NavigationView.OnNavigationItemSelect
                 setSelectionMode(false)
                 //mapView.setUserScrollZoomEnable(true);
                 //mapView.setCompassMode(true)
+
 
 
 

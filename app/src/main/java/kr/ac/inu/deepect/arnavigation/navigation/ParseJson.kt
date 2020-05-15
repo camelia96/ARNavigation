@@ -9,6 +9,8 @@ import org.json.JSONObject
 
 class ParseJson {
     companion object{
+        var totalTime : Int? = null
+
         fun parseJSON (root : JSONObject) : TMapPolyLine {
             val polyLine = TMapPolyLine()
             //popupListItems.clear()
@@ -16,6 +18,8 @@ class ParseJson {
             try {
                 val features = root.getJSONArray("features")
                 val len:Int = features.length()
+
+                totalTime = features.getJSONObject(0).getJSONObject("properties").getInt("totalTime")
 
                 for(i in 0 until features.length()) {
                     var obj = features.getJSONObject(i)
